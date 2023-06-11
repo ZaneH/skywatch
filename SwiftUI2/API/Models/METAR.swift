@@ -22,6 +22,7 @@ struct METAR: Codable, Identifiable {
     let temperature: Double
     let dewPoint: Double
     let altimeter: Altimeter
+    var rawString: String = ""
     
     struct Remark: Codable {
         let type: String
@@ -39,7 +40,7 @@ struct METAR: Codable, Identifiable {
         let pressureChange: Double?
     }
     
-    struct Cloud: Codable {
+    struct Cloud: Hashable, Codable {
         let quantity: String
         let height: Int
     }
@@ -47,14 +48,14 @@ struct METAR: Codable, Identifiable {
     struct Wind: Codable {
         let speed: Int
         let direction: String
-        let degrees: Int
+        var degrees: Int?
         let unit: String
         let minVariation: Int?
         let maxVariation: Int?
     }
     
     struct Visibility: Codable {
-        let value: Int
+        let value: Double
         let unit: String
     }
     
@@ -89,7 +90,7 @@ struct METAR: Codable, Identifiable {
         }
         
         // Append wind
-        result += "Wind: Speed: \(wind.speed), Direction: \(wind.direction), Degrees: \(wind.degrees), Unit: \(wind.unit)\n"
+        result += "Wind: Speed: \(wind.speed), Direction: \(wind.direction), Degrees: \(wind.degrees ?? 0), Unit: \(wind.unit)\n"
         // Append other properties of the wind as needed
         
         // Append visibility

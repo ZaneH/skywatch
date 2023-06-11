@@ -24,21 +24,58 @@ class MetarTaf {
     func parseMetar(_ data: String) async -> METAR? {
         let jsModule = self.context.objectForKeyedSubscript("MetarTafParser")
         let jsAnalyzer = jsModule?.objectForKeyedSubscript("MetarTafParser")
-        if let result = jsAnalyzer?.invokeMethod("parseMetar", withArguments: [data]),
-           let jsonString = result.toString(),
-           let jsonData = jsonString.data(using: .utf8) {
+        if let result = jsAnalyzer?.invokeMethod("parseMetar", withArguments: [data]) {
+            let jsonString = result.toString()
+            let jsonData = jsonString!.data(using: .utf8)!
             do {
-                let metar = try JSONDecoder().decode(METAR.self, from: jsonData)
+                var metar = try JSONDecoder().decode(METAR.self, from: jsonData)
+                metar.rawString = data
+                
                 return metar
             } catch {
                 // Failed to decode JSON or encountered an error
                 print("Error decoding JSON: ", error)
             }
-        } else {
-            // Invalid JSON object returned from method invocation
-            print("Invalid parser response")
+            
+            return nil
         }
         
         return nil
+    }
+    
+    func getFlightCategory(_ metar: String) -> String {
+        let jsModule = self.context.objectForKeyedSubscript("MetarTafParser")
+        let jsAnalyzer = jsModule?.objectForKeyedSubscript("MetarTafParser")
+        if let result = jsAnalyzer?.invokeMethod("getFlightCategory", withArguments: [metar]) {
+            let flightCategory = result.toString() ?? "N/A"
+            
+            return flightCategory
+        }
+        
+        return "N/A"
+    }
+    
+    func formatFlightCategory(_ category: String) -> String {
+        let jsModule = self.context.objectForKeyedSubscript("MetarTafParser")
+        let jsAnalyzer = jsModule?.objectForKeyedSubscript("MetarTafParser")
+        if let result = jsAnalyzer?.invokeMethod("formatFlightCategory", withArguments: [category]) {
+            let formattedCategory = result.toString() ?? "N/A"
+            
+            return formattedCategory
+        }
+        
+        return "N/A"
+    }
+    
+    func formatClouds(_ metar: String) -> String {
+        let jsModule = self.context.objectForKeyedSubscript("MetarTafParser")
+        let jsAnalyzer = jsModule?.objectForKeyedSubscript("MetarTafParser")
+        if let result = jsAnalyzer?.invokeMethod("formatClouds", withArguments: [metar]) {
+            let formattedClouds = result.toString() ?? "N/A"
+            
+            return formattedClouds
+        }
+        
+        return "N/A"
     }
 }

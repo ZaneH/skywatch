@@ -43,7 +43,7 @@ struct ContentView: View {
         } content: {
             ListView(selectedItem: $viewModel.selectedItem, items: viewModel.folders[viewModel.selectedFolder ?? "All", default: []])
                 .navigationTitle(viewModel.selectedFolder ?? "All")
-                .navigationSplitViewColumnWidth(150)
+                .navigationSplitViewColumnWidth(250)
         } detail: {
             DetailView(selectedItem: viewModel.selectedItem, stations: viewModel.stations)
         }

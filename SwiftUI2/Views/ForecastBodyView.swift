@@ -15,6 +15,37 @@ class ForecastBodyViewModel: ObservableObject {
     @Published var metar: METAR?
     @Published var selectedSegment = 0
     
+    var flightCategoryCode: String {
+        guard let metar = metar else {
+            return "N/A"
+        }
+        
+        return MetarTaf.shared.getFlightCategory(metar.rawString)
+    }
+    
+    var formattedFlightCategory: String {
+        guard let metar = metar else {
+            return "N/A"
+        }
+        
+        return MetarTaf.shared.formatFlightCategory(flightCategoryCode)
+    }
+    
+    var flightCategoryColor: Color {
+        switch flightCategoryCode {
+        case "VFR":
+            return Color.green
+        case "MVFR":
+            return Color.blue
+        case "IFR":
+            return Color.red
+        case "LIFR":
+            return Color.pink
+        default:
+            return Color.gray
+        }
+    }
+    
     func loadData() {
         guard let icaoId = station?.icaoId else { return }
         
@@ -36,14 +67,30 @@ struct ImageWidget: View {
     let heading: String
     let subheading: String
     let color: Color
+    var rotation: Int = 0
+    
+    init(imageName: String, heading: String, subheading: String, color: Color) {
+        self.imageName = imageName
+        self.heading = heading
+        self.subheading = subheading
+        self.color = color
+    }
+    
+    init(imageName: String, heading: String, subheading: String, color: Color, rotation: Int) {
+        self.imageName = imageName
+        self.heading = heading
+        self.subheading = subheading
+        self.color = color
+        self.rotation = rotation
+    }
     
     var body: some View {
         HStack(spacing: 12) {
             Image(systemName: imageName)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
+                .aspectRatio(contentMode: .fill)
                 .foregroundColor(color)
-                .font(.system(size: 34))
+                .font(.system(size: 32))
+                .rotationEffect(Angle(degrees: Double(self.rotation)))
             
             VStack(spacing: 4) {
                 Text(heading)
@@ -55,10 +102,11 @@ struct ImageWidget: View {
                     .bold()
             }
         }
+        .frame(height: 52) // Set a fixed width for the widget
         .padding()
         .background(Color.secondary.opacity(0.25))
         .cornerRadius(8)
-        .fixedSize()
+        .fixedSize(horizontal: false, vertical: true)
     }
 }
 
@@ -100,32 +148,52 @@ struct ForecastBodyView: View {
             if let metar = viewModel.metar {
                 ScrollView(.vertical) {
                     VStack {
-                        Text("Overview")
-                            .font(.title2)
-                            .bold()
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                        Group {
+                            Text("Overview")
+                                .font(.title2)
+                                .bold()
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            Divider()
+                            
+                            WrappingHStack(lineSpacing: 12) {
+                                ImageWidget(imageName: "sunrise.fill", heading: "Sunrise", subheading: getSunriseSunset().0, color: .yellow)
+                                ImageWidget(imageName: "sunset", heading: "Sunset", subheading: getSunriseSunset().1, color: .yellow)
+                                ImageWidget(imageName: "mountain.2.fill", heading: "Elevation", subheading: "\(station.elevation) feet", color: .gray)
+                                ImageWidget(imageName: "location.north.fill", heading: "Wind", subheading: "\(metar.wind.degrees ?? 0)° @ \(metar.wind.speed) knots", color: .gray, rotation: metar.wind.degrees ?? 0 + 180)
+                                ImageWidget(imageName: "airplane.circle.fill", heading: "Flight Category", subheading: viewModel.formattedFlightCategory, color: viewModel.flightCategoryColor)
+                            }.frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            Spacer()
+                                .frame(height: 32)
+                        }
                         
-                        Divider()
+                        Group {
+                            Text("Wind")
+                                .font(.title2)
+                                .bold()
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            Divider()
+                            
+                            Text(MetarTaf.shared.formatClouds(metar.rawString))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            Spacer()
+                                .frame(height: 32)
+                        }
                         
-                        WrappingHStack(lineSpacing: 12) {
-                            ImageWidget(imageName: "sunrise.fill", heading: "Sunrise", subheading: getSunriseSunset().0, color: .yellow)
-                            ImageWidget(imageName: "sunset", heading: "Sunset", subheading: getSunriseSunset().1, color: .yellow)
-                            ImageWidget(imageName: "mountain.2.fill", heading: "Elevation", subheading: "\(station.elevation) feet", color: .gray)
-                            ImageWidget(imageName: "location.fill", heading: "Coordinates", subheading: "\(station.latitude), \(station.longitude)", color: .blue)
-                        }.frame(maxWidth: .infinity, alignment: .leading)
-                        
-                        Spacer()
-                            .frame(height: 32)
-                        
-                        Text("Description")
-                            .font(.title2)
-                            .bold()
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        
-                        Divider()
-                        
-                        Text(metar.description)
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                        Group {
+                            Text("Raw Description")
+                                .font(.title2)
+                                .bold()
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            Divider()
+                            
+                            Text(metar.description)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
                     }
                 }
             } else {
