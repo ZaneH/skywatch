@@ -19,8 +19,8 @@ struct METAR: Codable, Identifiable {
     let clouds: [Cloud]
     let wind: Wind
     let visibility: Visibility
-    let temperature: Double
-    let dewPoint: Double
+    let temperature: Int
+    let dewPoint: Int
     let altimeter: Altimeter
     var rawString: String = ""
     
@@ -74,7 +74,7 @@ struct METAR: Codable, Identifiable {
         // Append station, day, hour, minute, and message
         result += "Station: \(station)\n"
         result += "Day: \(day), Hour: \(hour), Minute: \(minute)\n"
-        result += "Message: \(message)\n"
+        result += "Raw METAR: \(message)\n"
         
         // Append remarks
         result += "Remarks:\n"

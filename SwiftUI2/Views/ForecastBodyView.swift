@@ -15,16 +15,16 @@ class ForecastBodyViewModel: ObservableObject {
     @Published var metar: METAR?
     @Published var selectedSegment = 0
     
-    var flightCategoryCode: String {
+    var flightCategoryCode: String? {
         guard let metar = metar else {
-            return "N/A"
+            return nil
         }
         
         return MetarTaf.shared.getFlightCategory(metar.rawString)
     }
     
     var formattedFlightCategory: String {
-        guard let metar = metar else {
+        guard let flightCategoryCode = flightCategoryCode else {
             return "N/A"
         }
         
@@ -44,6 +44,22 @@ class ForecastBodyViewModel: ObservableObject {
         default:
             return Color.gray
         }
+    }
+    
+    var formattedVisibility: String {
+        guard let metar = metar else {
+            return "N/A"
+        }
+        
+        return MetarTaf.shared.formatVisibility(metar.rawString)
+    }
+    
+    var formattedAltimeter: String {
+        guard let metar = metar else {
+            return "N/A"
+        }
+        
+        return "\(metar.altimeter.value) \(metar.altimeter.unit)"
     }
     
     func loadData() {
@@ -162,6 +178,25 @@ struct ForecastBodyView: View {
                                 ImageWidget(imageName: "mountain.2.fill", heading: "Elevation", subheading: "\(station.elevation) feet", color: .gray)
                                 ImageWidget(imageName: "location.north.fill", heading: "Wind", subheading: "\(metar.wind.degrees ?? 0)° @ \(metar.wind.speed) knots", color: .gray, rotation: metar.wind.degrees ?? 0 + 180)
                                 ImageWidget(imageName: "airplane.circle.fill", heading: "Flight Category", subheading: viewModel.formattedFlightCategory, color: viewModel.flightCategoryColor)
+                                ImageWidget(imageName: "eye.fill", heading: "Visibility", subheading: viewModel.formattedVisibility, color: .gray)
+                                ImageWidget(imageName: "arrow.up.and.down", heading: "Altimeter", subheading: viewModel.formattedAltimeter, color: .gray)
+                            }.frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            Spacer()
+                                .frame(height: 32)
+                        }
+                        
+                        Group {
+                            Text("Temperatures")
+                                .font(.title2)
+                                .bold()
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            Divider()
+                            
+                            WrappingHStack(lineSpacing: 12) {
+                                ImageWidget(imageName: "thermometer.sun.fill", heading: "Temperature", subheading: "\(metar.temperature)°C", color: .red)
+                                ImageWidget(imageName: "thermometer.snowflake", heading: "Dewpoint", subheading: "\(metar.dewPoint)°C", color: .blue)
                             }.frame(maxWidth: .infinity, alignment: .leading)
                             
                             Spacer()

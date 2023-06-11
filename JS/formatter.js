@@ -263,17 +263,16 @@ export function getFlightCategory(visibility, clouds, verticalVisibility) {
     return flightCategory;
 }
 
-function formatVisibility(visibility) {
-    if (visibility) {
-        if (visibility.distance) {
-            const distance = formatDistance(visibility.distance);
-            const indicator = formatIndicator(visibility.indicator);
-            return `${distance} ${indicator}`;
-        } else if (visibility.cavok) {
-            return "CAVOK (Ceiling And Visibility OK)";
-        }
-    }
-    return "";
+export function formatVisibility(visibility) {
+    if (!visibility) return "Unknown visibility";
+
+    let value = `${visibility.value} ${visibility.unit}`;
+
+    const indiciator = formatIndicator(visibility.indicator);
+
+    if (indiciator) value = `${value} ${indiciator}`;
+
+    return value;
 }
 
 export function formatClouds(clouds) {

@@ -23,4 +23,9 @@ export class MetarTafParser {
         const parsedMetar = MetarTaf.parseMetar(metar);
         return Formatter.formatClouds(parsedMetar.clouds);
     }
+
+    static formatVisibility(metar) {
+        const parsedMetar = MetarTaf.parseMetar(metar);
+        return Formatter.formatVisibility(parsedMetar.visibility);
+    }
 }

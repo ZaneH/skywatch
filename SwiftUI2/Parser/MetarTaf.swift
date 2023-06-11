@@ -78,4 +78,16 @@ class MetarTaf {
         
         return "N/A"
     }
+    
+    func formatVisibility(_ metar: String) -> String {
+        let jsModule = self.context.objectForKeyedSubscript("MetarTafParser")
+        let jsAnalyzer = jsModule?.objectForKeyedSubscript("MetarTafParser")
+        if let result = jsAnalyzer?.invokeMethod("formatVisibility", withArguments: [metar]) {
+            let formattedVisibility = result.toString() ?? "N/A"
+            
+            return formattedVisibility
+        }
+        
+        return "N/A"
+    }
 }
