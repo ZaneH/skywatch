@@ -8,18 +8,17 @@
 import SwiftUI
 
 struct ForecastView: View {
-    let icaoId: String
+    let station: Station
     
     var body: some View {
         HStack {
             VStack {
-                Text("\(self.icaoId)")
+                Text("\(self.station.icaoId)")
                     .font(.largeTitle)
                     .bold()
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
-                ForecastBodyView(icaoId: self.icaoId)
-                    .padding()
+                ForecastBodyView(station: self.station)
                 
                 Spacer()
             }.padding()

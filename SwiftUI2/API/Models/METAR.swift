@@ -19,8 +19,8 @@ struct METAR: Codable, Identifiable {
     let clouds: [Cloud]
     let wind: Wind
     let visibility: Visibility
-    let temperature: Int
-    let dewPoint: Int
+    let temperature: Double
+    let dewPoint: Double
     let altimeter: Altimeter
     
     struct Remark: Codable {
@@ -33,7 +33,7 @@ struct METAR: Codable, Identifiable {
         let pressure: Double?
         let amount: Double?
         let periodInHours: Int?
-        let max: Int?
+        let max: Double?
         let min: Double?
         let code: Int?
         let pressureChange: Double?

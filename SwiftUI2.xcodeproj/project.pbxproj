@@ -14,6 +14,8 @@
 		2F80FDF32A35AC14005D055E /* METAR.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F80FDF22A35AC14005D055E /* METAR.swift */; };
 		2F80FDF52A35B285005D055E /* ForecastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F80FDF42A35B285005D055E /* ForecastView.swift */; };
 		2F80FDF82A35BD87005D055E /* ForecastBodyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F80FDF72A35BD87005D055E /* ForecastBodyView.swift */; };
+		2F80FDFB2A35DC0E005D055E /* Solar in Frameworks */ = {isa = PBXBuildFile; productRef = 2F80FDFA2A35DC0E005D055E /* Solar */; };
+		2F80FDFE2A35ED69005D055E /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = 2F80FDFD2A35ED69005D055E /* WrappingHStack */; };
 		2FCCA5CA2A357561008C0656 /* SwiftUI2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCCA5C92A357561008C0656 /* SwiftUI2App.swift */; };
 		2FCCA5CC2A357561008C0656 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCCA5CB2A357561008C0656 /* ContentView.swift */; };
 		2FCCA5CE2A357562008C0656 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FCCA5CD2A357562008C0656 /* Assets.xcassets */; };
@@ -43,6 +45,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F80FDFE2A35ED69005D055E /* WrappingHStack in Frameworks */,
+				2F80FDFB2A35DC0E005D055E /* Solar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,6 +145,10 @@
 			dependencies = (
 			);
 			name = SwiftUI2;
+			packageProductDependencies = (
+				2F80FDFA2A35DC0E005D055E /* Solar */,
+				2F80FDFD2A35ED69005D055E /* WrappingHStack */,
+			);
 			productName = SwiftUI2;
 			productReference = 2FCCA5C62A357561008C0656 /* SwiftUI2.app */;
 			productType = "com.apple.product-type.application";
@@ -169,6 +177,10 @@
 				Base,
 			);
 			mainGroup = 2FCCA5BD2A357561008C0656;
+			packageReferences = (
+				2F80FDF92A35DC0E005D055E /* XCRemoteSwiftPackageReference "Solar" */,
+				2F80FDFC2A35ED69005D055E /* XCRemoteSwiftPackageReference "WrappingHStack" */,
+			);
 			productRefGroup = 2FCCA5C72A357561008C0656 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -400,6 +412,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2F80FDF92A35DC0E005D055E /* XCRemoteSwiftPackageReference "Solar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ceeK/Solar.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+		2F80FDFC2A35ED69005D055E /* XCRemoteSwiftPackageReference "WrappingHStack" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dkk/WrappingHStack";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2F80FDFA2A35DC0E005D055E /* Solar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2F80FDF92A35DC0E005D055E /* XCRemoteSwiftPackageReference "Solar" */;
+			productName = Solar;
+		};
+		2F80FDFD2A35ED69005D055E /* WrappingHStack */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2F80FDFC2A35ED69005D055E /* XCRemoteSwiftPackageReference "WrappingHStack" */;
+			productName = WrappingHStack;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 2FCCA5BE2A357561008C0656 /* Project object */;
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Station: Codable, Identifiable {
+struct Station: Codable, Identifiable, Equatable {
     var id = UUID()
     let idNum: String
     let icaoId: String
@@ -29,5 +29,9 @@ struct Station: Codable, Identifiable {
         case state
         case country
         case siteType
+    }
+    
+    static func == (lhs: Station, rhs: Station) -> Bool {
+        lhs.icaoId == rhs.icaoId
     }
 }

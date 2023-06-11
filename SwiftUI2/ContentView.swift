@@ -7,69 +7,107 @@
 
 import SwiftUI
 
-struct ContentView: View {
-    @State private var visibility: NavigationSplitViewVisibility = .all
-    @State private var selectedFolder: String = "All"
-    @State private var selectedItem: String?
+class ContentViewModel: ObservableObject {
+    @Published var selectedFolder: String?
+    @Published var selectedItem: String?
     
-    @State private var folders = [
+    @Published var stations: [Station] = []
+    
+    @Published var folders = [
         "All": [],
-        "Favorites": [
-            "KFJK"
-        ]
+        "Favorites": ["KFJK"]
     ]
+    
+    init() {
+        fetchStations()
+    }
+    
+    func fetchStations() {
+        AviationAPI().fetchStations { [weak self] result in
+            DispatchQueue.main.async {
+                self?.stations = result
+                self?.folders["All"] = self?.stations.map { $0.icaoId }
+            }
+        }
+    }
+}
+
+struct ContentView: View {
+    @StateObject private var viewModel = ContentViewModel()
+    @State private var visibility: NavigationSplitViewVisibility = .all
     
     var body: some View {
         NavigationSplitView(columnVisibility: $visibility) {
-            List(selection: $selectedFolder) {
-                ForEach(Array(folders.keys.sorted()), id: \.self) { folder in
-                    NavigationLink(value: folder) {
-                        Text(verbatim: folder)
-                    }
-                }
-            }
-            .navigationTitle("Sidebar")
+            SidebarView(selectedFolder: $viewModel.selectedFolder, folders: viewModel.folders)
+                .navigationTitle("Sidebar")
         } content: {
-            List(selection: $selectedItem) {
-                ForEach(folders[selectedFolder, default: []], id: \.self) { item in
-                    NavigationLink(value: item) {
-                        Text(verbatim: item)
-                    }
+            ListView(selectedItem: $viewModel.selectedItem, items: viewModel.folders[viewModel.selectedFolder ?? "All", default: []])
+                .navigationTitle(viewModel.selectedFolder ?? "All")
+                .navigationSplitViewColumnWidth(150)
+        } detail: {
+            DetailView(selectedItem: viewModel.selectedItem, stations: viewModel.stations)
+        }
+        .navigationSplitViewStyle(.balanced)
+    }
+}
+
+struct SidebarView: View {
+    @Binding var selectedFolder: String?
+    let folders: [String: [String]]
+    
+    var body: some View {
+        List(selection: $selectedFolder) {
+            ForEach(Array(folders.keys.sorted()), id: \.self) { folder in
+                NavigationLink(value: folder) {
+                    Text(folder)
                 }
             }
-            .navigationTitle(selectedFolder)
-            .navigationSplitViewColumnWidth(150)
-        } detail: {
-            NavigationStack {
-                ZStack {
-                    if let selectedItem {
-                        ForecastView(icaoId: selectedItem)
+        }
+    }
+}
+
+struct ListView: View {
+    @Binding var selectedItem: String?
+    let items: [String]
+    
+    var body: some View {
+        List(selection: $selectedItem) {
+            ForEach(items, id: \.self) { item in
+                NavigationLink(value: item) {
+                    Text(item)
+                }
+            }
+        }
+    }
+}
+
+struct DetailView: View {
+    let selectedItem: String?
+    let stations: [Station]
+    
+    var body: some View {
+        NavigationStack {
+            ZStack {
+                if let selectedItem = selectedItem {
+                    if let selectedStation = stations.first(where: { $0.icaoId == selectedItem }) {
+                        ForecastView(station: selectedStation)
                             .toolbar {
                                 ToolbarItem(placement: .navigation) {
                                     Text(selectedItem)
                                 }
-                                
                                 ToolbarItem(placement: .primaryAction) {
-                                    Button(role: .none) {
-                                        visibility = .detailOnly
-                                    } label: {
+                                    Button(action: {}) {
                                         Image(systemName: "plus")
                                         Text("Add to Favorites")
                                     }
                                 }
                             }
-                    } else {
-                        Text("Select a location to view its data")
-                            .padding()
                     }
+                } else {
+                    Text("Select a location to view its data")
+                        .padding()
                 }
             }
-        }
-        .navigationSplitViewStyle(.balanced)
-        .onAppear() {
-            AviationAPI().fetchStations(completion: { result in
-                folders["All"] = result.map { $0.icaoId }
-            })
         }
     }
 }
