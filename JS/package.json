@@ -1,0 +1,20 @@
+{
+  "name": "js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --progress --color"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "metar-taf-parser": "^8.0.3"
+  },
+  "devDependencies": {
+    "webpack": "^5.86.0",
+    "webpack-cli": "^5.1.4"
+  }
+}
