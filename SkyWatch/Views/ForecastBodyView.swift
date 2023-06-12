@@ -9,6 +9,7 @@ import SwiftUI
 import Solar
 import CoreLocation
 import WrappingHStack
+import MapKit
 
 class ForecastBodyViewModel: ObservableObject {
     @Published var station: Station?
@@ -75,6 +76,29 @@ class ForecastBodyViewModel: ObservableObject {
                 }
             }
         }
+    }
+}
+
+struct MapAnnotationItem: Identifiable {
+    let id = UUID()
+    let coordinate: CLLocationCoordinate2D
+}
+
+struct MapEmbed: View {
+    @State private var region: MKCoordinateRegion
+    private var pinLocation: CLLocationCoordinate2D
+    
+    init(region: MKCoordinateRegion) {
+        self.region = region
+        self.pinLocation = region.center
+    }
+    
+    var body: some View {
+        Map(coordinateRegion: $region, annotationItems: [MapAnnotationItem(coordinate: self.pinLocation)]) { item in
+            MapMarker(coordinate: item.coordinate, tint: .red)
+        }
+            .frame(height: 200)
+            .cornerRadius(8)
     }
 }
 
@@ -213,6 +237,23 @@ struct ForecastBodyView: View {
                             
                             Text(MetarTaf.shared.formatClouds(metar.rawString))
                                 .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            Spacer()
+                                .frame(height: 32)
+                        }
+                        
+                        Group {
+                            Text("Map")
+                                .font(.title2)
+                                .bold()
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            
+                            Divider()
+                            
+                            MapEmbed(region: MKCoordinateRegion(
+                                center: CLLocationCoordinate2D(latitude: station.latitude, longitude: station.longitude),
+                                span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)
+                            ))
                             
                             Spacer()
                                 .frame(height: 32)
