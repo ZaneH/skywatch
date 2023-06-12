@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CoreData
 
 class ContentViewModel: ObservableObject {
     @Published var selectedFolder: String = "All"
@@ -18,8 +19,13 @@ class ContentViewModel: ObservableObject {
         "Favorites": ["KFJK"]
     ]
     
-    init() {
+    private var favorites: [Favorite]
+    
+    init(favorites: [Favorite]) {
+        self.favorites = favorites
+        
         fetchStations()
+        loadFavorites()
     }
     
     func fetchStations() {
@@ -30,11 +36,41 @@ class ContentViewModel: ObservableObject {
             }
         }
     }
+    
+    func loadFavorites() {
+        folders["Favorites"] = favorites.map { $0.icaoId! }
+    }
+    
+    func isFavorite(_ item: String) -> Bool {
+        return favorites.contains { $0.icaoId == item }
+    }
+    
+    func toggleFavorite(_ item: String) {
+        if let index = favorites.firstIndex(where: { $0.icaoId == item }) {
+            favorites.remove(at: index)
+        } else {
+            let newFavorite = Favorite(context: PersistenceController.shared.container.viewContext)
+            newFavorite.icaoId = item
+            favorites.append(newFavorite)
+        }
+        
+        try? PersistenceController.shared.container.viewContext.save()
+        loadFavorites()
+    }
 }
 
 struct ContentView: View {
-    @StateObject private var viewModel = ContentViewModel()
+    @StateObject private var viewModel: ContentViewModel
     @State private var visibility: NavigationSplitViewVisibility = .all
+    
+    @Environment(\.managedObjectContext) private var moc
+    @FetchRequest(sortDescriptors: []) private var favorites: FetchedResults<Favorite>
+    
+    init() {
+        let favorites = PersistenceController.shared.favorites
+        let viewModel = ContentViewModel(favorites: favorites)
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
     
     var body: some View {
         NavigationSplitView(columnVisibility: $visibility) {
@@ -42,10 +78,10 @@ struct ContentView: View {
                 .navigationTitle("Sidebar")
         } content: {
             ListView(selectedItem: $viewModel.selectedItem, items: viewModel.folders[viewModel.selectedFolder, default: []])
-                .navigationTitle(viewModel.selectedFolder )
+                .navigationTitle(viewModel.selectedFolder)
                 .navigationSplitViewColumnWidth(250)
         } detail: {
-            DetailView(selectedItem: viewModel.selectedItem, stations: viewModel.stations)
+            DetailView(selectedItem: viewModel.selectedItem, stations: viewModel.stations, isFavorite: viewModel.isFavorite, toggleFavorite: viewModel.toggleFavorite)
         }
         .navigationSplitViewStyle(.balanced)
     }
@@ -84,6 +120,8 @@ struct ListView: View {
 struct DetailView: View {
     let selectedItem: String?
     let stations: [Station]
+    let isFavorite: (String) -> Bool
+    let toggleFavorite: (String) -> Void
     
     var body: some View {
         NavigationStack {
@@ -96,9 +134,14 @@ struct DetailView: View {
                                     Text(selectedItem)
                                 }
                                 ToolbarItem(placement: .primaryAction) {
-                                    Button(action: {}) {
-                                        Image(systemName: "plus")
-                                        Text("Add to Favorites")
+                                    Button(action: {
+                                        toggleFavorite(selectedItem)
+                                    }) {
+                                        if isFavorite(selectedItem) {
+                                            Image(systemName: "star.fill")
+                                        } else {
+                                            Image(systemName: "star")
+                                        }
                                     }
                                 }
                             }

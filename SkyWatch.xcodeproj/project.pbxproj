@@ -21,6 +21,8 @@
 		2FCCA5CE2A357562008C0656 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FCCA5CD2A357562008C0656 /* Assets.xcassets */; };
 		2FCCA5D12A357562008C0656 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FCCA5D02A357562008C0656 /* Preview Assets.xcassets */; };
 		2FCCA5D92A358913008C0656 /* NavigationManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCCA5D82A358913008C0656 /* NavigationManagerView.swift */; };
+		2FF7172C2A36B7C4009B8078 /* Favorites.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7172A2A36B7C4009B8078 /* Favorites.xcdatamodeld */; };
+		2FF7172E2A36B8EC009B8078 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7172D2A36B8EC009B8078 /* Persistence.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,8 @@
 		2FCCA5D02A357562008C0656 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2FCCA5D22A357562008C0656 /* SkyWatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SkyWatch.entitlements; sourceTree = "<group>"; };
 		2FCCA5D82A358913008C0656 /* NavigationManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManagerView.swift; sourceTree = "<group>"; };
+		2FF7172B2A36B7C4009B8078 /* Favorites.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Favorites.xcdatamodel; sourceTree = "<group>"; };
+		2FF7172D2A36B8EC009B8078 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +121,8 @@
 				2FCCA5D22A357562008C0656 /* SkyWatch.entitlements */,
 				2FCCA5CF2A357562008C0656 /* Preview Content */,
 				2FCCA5D82A358913008C0656 /* NavigationManagerView.swift */,
+				2FF7172A2A36B7C4009B8078 /* Favorites.xcdatamodeld */,
+				2FF7172D2A36B8EC009B8078 /* Persistence.swift */,
 			);
 			path = SkyWatch;
 			sourceTree = "<group>";
@@ -208,6 +214,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2FF7172E2A36B8EC009B8078 /* Persistence.swift in Sources */,
 				2F80FDF32A35AC14005D055E /* METAR.swift in Sources */,
 				2FCCA5D92A358913008C0656 /* NavigationManagerView.swift in Sources */,
 				2F80FDED2A35A849005D055E /* MetarTaf.swift in Sources */,
@@ -215,6 +222,7 @@
 				2F80FDF82A35BD87005D055E /* ForecastBodyView.swift in Sources */,
 				2F80FDE72A35A232005D055E /* AviationAPI.swift in Sources */,
 				2FCCA5CC2A357561008C0656 /* ContentView.swift in Sources */,
+				2FF7172C2A36B7C4009B8078 /* Favorites.xcdatamodeld in Sources */,
 				2FCCA5CA2A357561008C0656 /* SkyWatch.swift in Sources */,
 				2F80FDF52A35B285005D055E /* ForecastView.swift in Sources */,
 			);
@@ -452,6 +460,19 @@
 			productName = WrappingHStack;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		2FF7172A2A36B7C4009B8078 /* Favorites.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				2FF7172B2A36B7C4009B8078 /* Favorites.xcdatamodel */,
+			);
+			currentVersion = 2FF7172B2A36B7C4009B8078 /* Favorites.xcdatamodel */;
+			path = Favorites.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 2FCCA5BE2A357561008C0656 /* Project object */;
 }
