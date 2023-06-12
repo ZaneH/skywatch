@@ -13,10 +13,16 @@ struct ForecastView: View {
     var body: some View {
         HStack {
             VStack {
-                Text("\(self.station.icaoId)")
-                    .font(.largeTitle)
-                    .bold()
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                HStack {
+                    Text("\(self.station.icaoId)")
+                        .font(.largeTitle)
+                        .bold()
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    Text("\(self.station.state), \(self.station.country)")
+                        .font(.title)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                }
                 
                 ForecastBodyView(station: self.station)
                 
