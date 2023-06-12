@@ -17,11 +17,25 @@ struct ForecastView: View {
                     Text("\(self.station.icaoId)")
                         .font(.largeTitle)
                         .bold()
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .frame(alignment: .leading)
+                    
+                    Text("–").padding(.horizontal, 4)
                     
                     Text("\(self.station.state), \(self.station.country)")
                         .font(.title)
-                        .frame(maxWidth: .infinity, alignment: .trailing)
+                    
+                    Spacer()
+                    
+                    Group {
+                        Image(systemName: "location.fill")
+                            .foregroundColor(.gray)
+                            .font(.system(size: 16))
+                        
+                        
+                        Text("\(self.station.latitude.formatted(.number)), \(self.station.longitude.formatted(.number))")
+                            .font(.title)
+                            .frame(alignment: .trailing)
+                    }
                 }
                 
                 ForecastBodyView(station: self.station)

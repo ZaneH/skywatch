@@ -9,7 +9,7 @@ import SwiftUI
 import CoreData
 
 class ContentViewModel: ObservableObject {
-    @Published var selectedFolder: String = "All"
+    @Published var selectedFolder: String? = "All"
     @Published var selectedItem: String?
     
     @Published var stations: [Station] = []
@@ -77,8 +77,8 @@ struct ContentView: View {
             SidebarView(selectedFolder: $viewModel.selectedFolder, folders: viewModel.folders)
                 .navigationTitle("Sidebar")
         } content: {
-            ListView(selectedItem: $viewModel.selectedItem, items: viewModel.folders[viewModel.selectedFolder, default: []])
-                .navigationTitle(viewModel.selectedFolder)
+            ListView(selectedItem: $viewModel.selectedItem, items: viewModel.folders[viewModel.selectedFolder ??  "All", default: []])
+                .navigationTitle(viewModel.selectedFolder ?? "All")
                 .navigationSplitViewColumnWidth(250)
         } detail: {
             DetailView(selectedItem: viewModel.selectedItem, stations: viewModel.stations, isFavorite: viewModel.isFavorite, toggleFavorite: viewModel.toggleFavorite)
@@ -88,7 +88,7 @@ struct ContentView: View {
 }
 
 struct SidebarView: View {
-    @Binding var selectedFolder: String
+    @Binding var selectedFolder: String?
     let folders: [String: [String]]
     
     var body: some View {

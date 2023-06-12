@@ -79,77 +79,6 @@ class ForecastBodyViewModel: ObservableObject {
     }
 }
 
-struct MapAnnotationItem: Identifiable {
-    let id = UUID()
-    let coordinate: CLLocationCoordinate2D
-}
-
-struct MapEmbed: View {
-    @State private var region: MKCoordinateRegion
-    private var pinLocation: CLLocationCoordinate2D
-    
-    init(region: MKCoordinateRegion) {
-        self.region = region
-        self.pinLocation = region.center
-    }
-    
-    var body: some View {
-        Map(coordinateRegion: $region, annotationItems: [MapAnnotationItem(coordinate: self.pinLocation)]) { item in
-            MapMarker(coordinate: item.coordinate, tint: .red)
-        }
-            .frame(height: 200)
-            .cornerRadius(8)
-    }
-}
-
-struct ImageWidget: View {
-    let imageName: String
-    let heading: String
-    let subheading: String
-    let color: Color
-    var rotation: Int = 0
-    
-    init(imageName: String, heading: String, subheading: String, color: Color) {
-        self.imageName = imageName
-        self.heading = heading
-        self.subheading = subheading
-        self.color = color
-    }
-    
-    init(imageName: String, heading: String, subheading: String, color: Color, rotation: Int) {
-        self.imageName = imageName
-        self.heading = heading
-        self.subheading = subheading
-        self.color = color
-        self.rotation = rotation
-    }
-    
-    var body: some View {
-        HStack(spacing: 12) {
-            Image(systemName: imageName)
-                .aspectRatio(contentMode: .fill)
-                .foregroundColor(color)
-                .font(.system(size: 32))
-                .rotationEffect(Angle(degrees: Double(self.rotation)))
-            
-            VStack(spacing: 4) {
-                Text(heading)
-                    .font(.headline)
-                    .bold()
-                
-                Text(subheading)
-                    .font(.subheadline)
-                    .bold()
-            }
-        }
-        .frame(height: 52) // Set a fixed width for the widget
-        .padding()
-        .background(Color.secondary.opacity(0.25))
-        .cornerRadius(8)
-        .fixedSize(horizontal: false, vertical: true)
-    }
-}
-
 struct ForecastBodyView: View {
     let station: Station
     @StateObject private var viewModel: ForecastBodyViewModel
@@ -169,8 +98,7 @@ struct ForecastBodyView: View {
     
     var body: some View {
         HStack(spacing: 0) {
-            Text("METAR/TAF")
-                .font(.title3)
+            Text("Display mode")
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             Picker("", selection: $viewModel.selectedSegment) {
