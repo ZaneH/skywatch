@@ -10,7 +10,7 @@ Tested on iPad and macOS.
 ## Preview
 
 <p align="center">
-    <img width="80%" alt="macOS screenshot" src="https://github.com/ZaneH/skywatch/assets/8400251/48cd34fb-ba94-4585-81b8-73d4d85e25e3">
+    <img width="80%" alt="macOS screenshot" src="https://i.imgur.com/L6svmBU.png">
 </p>
 
 ## License
