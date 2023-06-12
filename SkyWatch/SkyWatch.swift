@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct SwiftUI2App: App {
+struct SkyWatch: App {
     var body: some Scene {
         WindowGroup {
             ContentView()

@@ -16,7 +16,7 @@
 		2F80FDF82A35BD87005D055E /* ForecastBodyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F80FDF72A35BD87005D055E /* ForecastBodyView.swift */; };
 		2F80FDFB2A35DC0E005D055E /* Solar in Frameworks */ = {isa = PBXBuildFile; productRef = 2F80FDFA2A35DC0E005D055E /* Solar */; };
 		2F80FDFE2A35ED69005D055E /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = 2F80FDFD2A35ED69005D055E /* WrappingHStack */; };
-		2FCCA5CA2A357561008C0656 /* SwiftUI2App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCCA5C92A357561008C0656 /* SwiftUI2App.swift */; };
+		2FCCA5CA2A357561008C0656 /* SkyWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCCA5C92A357561008C0656 /* SkyWatch.swift */; };
 		2FCCA5CC2A357561008C0656 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCCA5CB2A357561008C0656 /* ContentView.swift */; };
 		2FCCA5CE2A357562008C0656 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FCCA5CD2A357562008C0656 /* Assets.xcassets */; };
 		2FCCA5D12A357562008C0656 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FCCA5D02A357562008C0656 /* Preview Assets.xcassets */; };
@@ -31,12 +31,12 @@
 		2F80FDF22A35AC14005D055E /* METAR.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = METAR.swift; sourceTree = "<group>"; };
 		2F80FDF42A35B285005D055E /* ForecastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastView.swift; sourceTree = "<group>"; };
 		2F80FDF72A35BD87005D055E /* ForecastBodyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastBodyView.swift; sourceTree = "<group>"; };
-		2FCCA5C62A357561008C0656 /* SwiftUI2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUI2.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		2FCCA5C92A357561008C0656 /* SwiftUI2App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUI2App.swift; sourceTree = "<group>"; };
+		2FCCA5C62A357561008C0656 /* SkyWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SkyWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2FCCA5C92A357561008C0656 /* SkyWatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyWatch.swift; sourceTree = "<group>"; };
 		2FCCA5CB2A357561008C0656 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2FCCA5CD2A357562008C0656 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2FCCA5D02A357562008C0656 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		2FCCA5D22A357562008C0656 /* SwiftUI2.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftUI2.entitlements; sourceTree = "<group>"; };
+		2FCCA5D22A357562008C0656 /* SkyWatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SkyWatch.entitlements; sourceTree = "<group>"; };
 		2FCCA5D82A358913008C0656 /* NavigationManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManagerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -92,7 +92,7 @@
 		2FCCA5BD2A357561008C0656 = {
 			isa = PBXGroup;
 			children = (
-				2FCCA5C82A357561008C0656 /* SwiftUI2 */,
+				2FCCA5C82A357561008C0656 /* SkyWatch */,
 				2FCCA5C72A357561008C0656 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -100,25 +100,25 @@
 		2FCCA5C72A357561008C0656 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				2FCCA5C62A357561008C0656 /* SwiftUI2.app */,
+				2FCCA5C62A357561008C0656 /* SkyWatch.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		2FCCA5C82A357561008C0656 /* SwiftUI2 */ = {
+		2FCCA5C82A357561008C0656 /* SkyWatch */ = {
 			isa = PBXGroup;
 			children = (
 				2F80FDF62A35BD75005D055E /* Views */,
 				2F80FDEB2A35A83C005D055E /* Parser */,
-				2FCCA5C92A357561008C0656 /* SwiftUI2App.swift */,
+				2FCCA5C92A357561008C0656 /* SkyWatch.swift */,
 				2FCCA5CB2A357561008C0656 /* ContentView.swift */,
 				2F80FDE52A35A21E005D055E /* API */,
 				2FCCA5CD2A357562008C0656 /* Assets.xcassets */,
-				2FCCA5D22A357562008C0656 /* SwiftUI2.entitlements */,
+				2FCCA5D22A357562008C0656 /* SkyWatch.entitlements */,
 				2FCCA5CF2A357562008C0656 /* Preview Content */,
 				2FCCA5D82A358913008C0656 /* NavigationManagerView.swift */,
 			);
-			path = SwiftUI2;
+			path = SkyWatch;
 			sourceTree = "<group>";
 		};
 		2FCCA5CF2A357562008C0656 /* Preview Content */ = {
@@ -132,9 +132,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		2FCCA5C52A357561008C0656 /* SwiftUI2 */ = {
+		2FCCA5C52A357561008C0656 /* SkyWatch */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2FCCA5D52A357562008C0656 /* Build configuration list for PBXNativeTarget "SwiftUI2" */;
+			buildConfigurationList = 2FCCA5D52A357562008C0656 /* Build configuration list for PBXNativeTarget "SkyWatch" */;
 			buildPhases = (
 				2FCCA5C22A357561008C0656 /* Sources */,
 				2FCCA5C32A357561008C0656 /* Frameworks */,
@@ -144,13 +144,13 @@
 			);
 			dependencies = (
 			);
-			name = SwiftUI2;
+			name = SkyWatch;
 			packageProductDependencies = (
 				2F80FDFA2A35DC0E005D055E /* Solar */,
 				2F80FDFD2A35ED69005D055E /* WrappingHStack */,
 			);
-			productName = SwiftUI2;
-			productReference = 2FCCA5C62A357561008C0656 /* SwiftUI2.app */;
+			productName = SkyWatch;
+			productReference = 2FCCA5C62A357561008C0656 /* SkyWatch.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -168,7 +168,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 2FCCA5C12A357561008C0656 /* Build configuration list for PBXProject "SwiftUI2" */;
+			buildConfigurationList = 2FCCA5C12A357561008C0656 /* Build configuration list for PBXProject "SkyWatch" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -185,7 +185,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				2FCCA5C52A357561008C0656 /* SwiftUI2 */,
+				2FCCA5C52A357561008C0656 /* SkyWatch */,
 			);
 		};
 /* End PBXProject section */
@@ -215,7 +215,7 @@
 				2F80FDF82A35BD87005D055E /* ForecastBodyView.swift in Sources */,
 				2F80FDE72A35A232005D055E /* AviationAPI.swift in Sources */,
 				2FCCA5CC2A357561008C0656 /* ContentView.swift in Sources */,
-				2FCCA5CA2A357561008C0656 /* SwiftUI2App.swift in Sources */,
+				2FCCA5CA2A357561008C0656 /* SkyWatch.swift in Sources */,
 				2F80FDF52A35B285005D055E /* ForecastView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -341,11 +341,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = SwiftUI2/SwiftUI2.entitlements;
+				CODE_SIGN_ENTITLEMENTS = SkyWatch/SkyWatch.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"SwiftUI2/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"SkyWatch/Preview Content\"";
 				DEVELOPMENT_TEAM = RVV256PDH3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -356,7 +356,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.zane.swiftui2.SwiftUI2;
+				PRODUCT_BUNDLE_IDENTIFIER = pw.zane.skywatch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
@@ -372,11 +372,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = SwiftUI2/SwiftUI2.entitlements;
+				CODE_SIGN_ENTITLEMENTS = SkyWatch/SkyWatch.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"SwiftUI2/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"SkyWatch/Preview Content\"";
 				DEVELOPMENT_TEAM = RVV256PDH3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -387,7 +387,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.zane.swiftui2.SwiftUI2;
+				PRODUCT_BUNDLE_IDENTIFIER = pw.zane.skywatch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SUPPORTS_MACCATALYST = NO;
@@ -401,7 +401,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2FCCA5C12A357561008C0656 /* Build configuration list for PBXProject "SwiftUI2" */ = {
+		2FCCA5C12A357561008C0656 /* Build configuration list for PBXProject "SkyWatch" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2FCCA5D32A357562008C0656 /* Debug */,
@@ -410,7 +410,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2FCCA5D52A357562008C0656 /* Build configuration list for PBXNativeTarget "SwiftUI2" */ = {
+		2FCCA5D52A357562008C0656 /* Build configuration list for PBXNativeTarget "SkyWatch" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2FCCA5D62A357562008C0656 /* Debug */,
