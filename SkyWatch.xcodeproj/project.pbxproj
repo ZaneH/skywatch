@@ -17,7 +17,7 @@
 		2F80FDFB2A35DC0E005D055E /* Solar in Frameworks */ = {isa = PBXBuildFile; productRef = 2F80FDFA2A35DC0E005D055E /* Solar */; };
 		2F80FDFE2A35ED69005D055E /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = 2F80FDFD2A35ED69005D055E /* WrappingHStack */; };
 		2F8EDCDF2A64C2C90017F883 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8EDCDE2A64C2C90017F883 /* SettingsView.swift */; };
-		2F8EDCE12A64C30A0017F883 /* LocationSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8EDCE02A64C30A0017F883 /* LocationSettingsView.swift */; };
+		2F8EDCE12A64C30A0017F883 /* FilterSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8EDCE02A64C30A0017F883 /* FilterSettingsView.swift */; };
 		2FCCA5CA2A357561008C0656 /* SkyWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCCA5C92A357561008C0656 /* SkyWatch.swift */; };
 		2FCCA5CC2A357561008C0656 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCCA5CB2A357561008C0656 /* ContentView.swift */; };
 		2FCCA5CE2A357562008C0656 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FCCA5CD2A357562008C0656 /* Assets.xcassets */; };
@@ -38,7 +38,7 @@
 		2F80FDF42A35B285005D055E /* ForecastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastView.swift; sourceTree = "<group>"; };
 		2F80FDF72A35BD87005D055E /* ForecastBodyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastBodyView.swift; sourceTree = "<group>"; };
 		2F8EDCDE2A64C2C90017F883 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		2F8EDCE02A64C30A0017F883 /* LocationSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSettingsView.swift; sourceTree = "<group>"; };
+		2F8EDCE02A64C30A0017F883 /* FilterSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSettingsView.swift; sourceTree = "<group>"; };
 		2FCCA5C62A357561008C0656 /* SkyWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SkyWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FCCA5C92A357561008C0656 /* SkyWatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyWatch.swift; sourceTree = "<group>"; };
 		2FCCA5CB2A357561008C0656 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -95,14 +95,22 @@
 		2F80FDF62A35BD75005D055E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				2FC5AC3F2A65C37C008A659C /* Settings */,
 				2F80FDF42A35B285005D055E /* ForecastView.swift */,
 				2F80FDF72A35BD87005D055E /* ForecastBodyView.swift */,
 				2FF7172F2A36CD45009B8078 /* MapEmbed.swift */,
 				2FF717312A36CD8B009B8078 /* ImageWidget.swift */,
-				2F8EDCDE2A64C2C90017F883 /* SettingsView.swift */,
-				2F8EDCE02A64C30A0017F883 /* LocationSettingsView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		2FC5AC3F2A65C37C008A659C /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				2F8EDCDE2A64C2C90017F883 /* SettingsView.swift */,
+				2F8EDCE02A64C30A0017F883 /* FilterSettingsView.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		2FCCA5BD2A357561008C0656 = {
@@ -228,7 +236,7 @@
 			files = (
 				2FF717302A36CD45009B8078 /* MapEmbed.swift in Sources */,
 				2FF7172E2A36B8EC009B8078 /* Persistence.swift in Sources */,
-				2F8EDCE12A64C30A0017F883 /* LocationSettingsView.swift in Sources */,
+				2F8EDCE12A64C30A0017F883 /* FilterSettingsView.swift in Sources */,
 				2F80FDF32A35AC14005D055E /* METAR.swift in Sources */,
 				2FCCA5D92A358913008C0656 /* NavigationManagerView.swift in Sources */,
 				2F80FDED2A35A849005D055E /* MetarTaf.swift in Sources */,
@@ -381,6 +389,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -388,7 +397,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = pw.zane.skywatch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "xrsimulator xros ios macosx";
+				SUPPORTED_PLATFORMS = "ios iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -412,6 +421,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -419,7 +429,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = pw.zane.skywatch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "xrsimulator xros ios macosx";
+				SUPPORTED_PLATFORMS = "ios iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;

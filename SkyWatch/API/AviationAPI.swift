@@ -10,6 +10,8 @@ import Foundation
 class AviationAPI: ObservableObject {
     static let shared = AviationAPI()
     
+    @Published var stations: [Station] = []
+    
     func fetchStations(completion: @escaping([Station]) -> ()) {
         guard let url = URL(string: "https://beta.aviationweather.gov/cgi-bin/data/stationinfo.php?format=json") else {
             print("Invalid URL for fetching station data")
@@ -21,6 +23,7 @@ class AviationAPI: ObservableObject {
             
             DispatchQueue.main.async {
                 completion(result)
+                self.stations = result
             }
         }.resume()
     }

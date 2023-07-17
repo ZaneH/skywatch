@@ -1,5 +1,5 @@
 //
-//  LocationSettingsView.swift
+//  FilterSettingsView.swift
 //  SkyWatch
 //
 //  Created by Zane Helton on 7/16/23.
@@ -7,20 +7,19 @@
 
 import SwiftUI
 
-struct LocationSettingsView: View {
-    @State var stateFilter: String = ""
+struct FilterSettingsView: View {
+    @AppStorage("statesFilter") private var statesFilter: String = ""
+    @AppStorage("countriesFilter") private var countriesFilter: String = ""
     
     var body: some View {
-//        Text("Location Settings")
-//            .font(.title)
         VStack {
             Form {
-                TextField("Filter by state(s)", text: $stateFilter, prompt: Text("CA, NY, WY"))
+                TextField("Filter by state(s)", text: $statesFilter, prompt: Text("CA, NY, WY"))
                 Text("Narrow stations to these US states or Canadian provinces.")
                     .foregroundStyle(.gray)
                     .font(.caption)
                 
-                TextField("Filter by countries", text: $stateFilter, prompt: Text("US, AU, UK"))
+                TextField("Filter by countries", text: $countriesFilter, prompt: Text("US, AU, UK"))
                 Text("Narrow stations to these two-letter country abbreviations.")
                     .foregroundStyle(.gray)
                     .font(.caption)

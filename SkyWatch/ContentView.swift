@@ -11,9 +11,9 @@ import CoreData
 class ContentViewModel: ObservableObject {
     @Published var selectedFolder: String? = "All"
     @Published var selectedItem: String?
-    
-    @Published var stations: [Station] = []
+
     @Published var favorites: [String] = []
+    @Published var stations = AviationAPI.shared.stations
     
     private var viewContext: NSManagedObjectContext
     
@@ -30,7 +30,7 @@ class ContentViewModel: ObservableObject {
     }
     
     func fetchStations() {
-        AviationAPI().fetchStations { [weak self] result in
+        AviationAPI.shared.fetchStations { [weak self] result in
             DispatchQueue.main.async {
                 self?.stations = result
                 self?.folders["All"] = self?.stations.map { $0.icaoId }
@@ -57,6 +57,7 @@ struct ContentView: View {
     
     @StateObject private var viewModel: ContentViewModel
     @State private var visibility: NavigationSplitViewVisibility = .all
+    @State private var searchText: String = ""
     
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Favorite.icaoId, ascending: true)],
@@ -82,6 +83,14 @@ struct ContentView: View {
         return favorites.contains { $0.icaoId == icaoId }
     }
     
+    func searchStations(searchText: String) -> [Station] {
+        return viewModel.stations.filter { station in
+            station.icaoId.lowercased().contains(searchText.lowercased()) ||
+            station.country.lowercased().contains(searchText.lowercased()) ||
+            station.state.lowercased().contains(searchText.lowercased())
+        }
+    }
+    
     init() {
         let viewModel = ContentViewModel(viewContext: PersistenceController.shared.container.viewContext)
         _viewModel = StateObject(wrappedValue: viewModel)
@@ -94,7 +103,7 @@ struct ContentView: View {
                 "All": viewModel.folders["All", default: []],
                 "Favorites": viewModel.favorites
             ])
-            .navigationTitle("Sidebar")
+            .navigationTitle("Stations")
         } content: {
             ListView(selectedItem: $viewModel.selectedItem, items: viewModel.folders[viewModel.selectedFolder ??  "All", default: []])
                 .navigationTitle(viewModel.selectedFolder ?? "All")
@@ -103,6 +112,15 @@ struct ContentView: View {
             DetailView(selectedItem: viewModel.selectedItem, stations: viewModel.stations, toggleFavorite: toggleFavorite, isFavorite: isFavorite)
         }
         .navigationSplitViewStyle(.balanced)
+        .searchable(text: $searchText, placement: .toolbar, prompt: "Station name, state, or country", suggestions: {
+            ForEach(searchStations(searchText: searchText), id: \.self) { station in
+                Button {
+                    viewModel.selectedItem = station.icaoId
+                } label: {
+                    Label(station.icaoId, systemImage: "airplane")
+                }
+            }
+        })
     }
 }
 

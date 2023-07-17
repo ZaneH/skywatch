@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Station: Codable, Identifiable, Equatable {
+struct Station: Codable, Identifiable, Equatable, Hashable {
     var id = UUID()
     let idNum: String
     let icaoId: String

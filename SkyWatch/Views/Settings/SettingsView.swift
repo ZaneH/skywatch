@@ -10,7 +10,7 @@ import SwiftUI
 struct SettingsView: View {
     var body: some View {
         TabView {
-            LocationSettingsView()
+            FilterSettingsView()
                 .tabItem {
                     Label("Filter", systemImage: "line.3.horizontal.decrease.circle")
                 }
