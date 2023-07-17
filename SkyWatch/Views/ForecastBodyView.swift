@@ -100,25 +100,27 @@ struct ForecastBodyView: View {
         VStack {
             if let metar = viewModel.metar {
                 ScrollView(.vertical) {
-                    HStack(spacing: 0) {
-                        Text("Display mode")
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        
-                        Picker("", selection: $viewModel.selectedSegment) {
-                            Text("METAR").tag(0)
-                            Text("TAF").tag(1)
-                        }
-                        .pickerStyle(SegmentedPickerStyle())
-                        .frame(maxWidth: .infinity)
-                    }
-                    .padding()
-                    .background(Color.secondary.opacity(0.25))
-                    .cornerRadius(8)
-                    
-                    Spacer()
-                        .frame(height: 32)
-                    
                     VStack {
+                        Group {
+                            HStack(spacing: 0) {
+                                Text("Display mode")
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                
+                                Picker("", selection: $viewModel.selectedSegment) {
+                                    Text("METAR").tag(0)
+                                    Text("TAF").tag(1)
+                                }
+                                .pickerStyle(SegmentedPickerStyle())
+                                .frame(maxWidth: .infinity)
+                            }
+                            .padding()
+                            .background(Color.secondary.opacity(0.25))
+                            .cornerRadius(8)
+                            
+                            Spacer()
+                                .frame(height: 32)
+                        }
+                        
                         Group {
                             Text("Overview")
                                 .font(.title2)
@@ -205,7 +207,7 @@ struct ForecastBodyView: View {
                             Text(metar.description)
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         }
-                    }
+                    }.padding()
                 }
             } else {
                 ProgressView()
@@ -213,7 +215,6 @@ struct ForecastBodyView: View {
                     .frame(width: 44, height: 44)
             }
         }
-        .padding(.top)
         .onAppear {
             viewModel.station = station
             viewModel.loadData()

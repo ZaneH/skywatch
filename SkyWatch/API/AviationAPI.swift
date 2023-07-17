@@ -12,18 +12,29 @@ class AviationAPI: ObservableObject {
     
     @Published var stations: [Station] = []
     
-    func fetchStations(completion: @escaping([Station]) -> ()) {
-        guard let url = URL(string: "https://beta.aviationweather.gov/cgi-bin/data/stationinfo.php?format=json") else {
+    func fetchStations(statesFilter: String, countriesFilter: String, completion: @escaping([Station]) -> ()) {
+        let statesFilterTokens = statesFilter.replacingOccurrences(of: " ", with: "").components(separatedBy: ",").filter({ $0 != "" })
+        let countriesFilterTokens = countriesFilter.replacingOccurrences(of: " ", with: "").components(separatedBy: ",").filter({ $0 != "" })
+        
+        var qsValue = "\(statesFilterTokens.map({ "@\($0)," }).joined())\(countriesFilterTokens.map({ "~\($0)," }).joined())"
+        if (qsValue.count == 0) {
+            qsValue = "~us"
+        }
+        
+        guard let url = URL(string: "https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=stations&requestType=retrieve&format=xml&stationString=\(qsValue)") else {
             print("Invalid URL for fetching station data")
             return
         }
-        
+
         URLSession.shared.dataTask(with: url) { data, response, error in
-            let result = try! JSONDecoder().decode([Station].self, from: data!)
+            let parser = StationsXMLParser()
+            let xmlParser = XMLParser(data: data!)
+            xmlParser.delegate = parser
+            xmlParser.parse()
             
             DispatchQueue.main.async {
-                completion(result)
-                self.stations = result
+                completion(parser.stations)
+                self.stations = parser.stations
             }
         }.resume()
     }

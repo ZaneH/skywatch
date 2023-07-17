@@ -17,6 +17,9 @@ class ContentViewModel: ObservableObject {
     
     private var viewContext: NSManagedObjectContext
     
+    @AppStorage("statesFilter") private var statesFilter: String = ""
+    @AppStorage("countriesFilter") private var countriesFilter: String = ""
+    
     @Published var folders: [String: [String]] = [
         "All": [],
         "Favorites": []
@@ -30,12 +33,12 @@ class ContentViewModel: ObservableObject {
     }
     
     func fetchStations() {
-        AviationAPI.shared.fetchStations { [weak self] result in
+        AviationAPI.shared.fetchStations(statesFilter: statesFilter, countriesFilter: countriesFilter, completion: { [weak self] result in
             DispatchQueue.main.async {
                 self?.stations = result
                 self?.folders["All"] = self?.stations.map { $0.icaoId }
             }
-        }
+        })
     }
     
     func fetchFavorites() {
@@ -113,11 +116,11 @@ struct ContentView: View {
         }
         .navigationSplitViewStyle(.balanced)
         .searchable(text: $searchText, placement: .toolbar, prompt: "Station name, state, or country", suggestions: {
-            ForEach(searchStations(searchText: searchText), id: \.self) { station in
+            ForEach(searchStations(searchText: searchText).prefix(100), id: \.self) { station in
                 Button {
                     viewModel.selectedItem = station.icaoId
                 } label: {
-                    Label(station.icaoId, systemImage: "airplane")
+                    Text(station.icaoId)
                 }
             }
         })

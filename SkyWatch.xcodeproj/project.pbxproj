@@ -18,6 +18,7 @@
 		2F80FDFE2A35ED69005D055E /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = 2F80FDFD2A35ED69005D055E /* WrappingHStack */; };
 		2F8EDCDF2A64C2C90017F883 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8EDCDE2A64C2C90017F883 /* SettingsView.swift */; };
 		2F8EDCE12A64C30A0017F883 /* FilterSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F8EDCE02A64C30A0017F883 /* FilterSettingsView.swift */; };
+		2FC5AC412A65D569008A659C /* StationsXMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC5AC402A65D569008A659C /* StationsXMLParser.swift */; };
 		2FCCA5CA2A357561008C0656 /* SkyWatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCCA5C92A357561008C0656 /* SkyWatch.swift */; };
 		2FCCA5CC2A357561008C0656 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCCA5CB2A357561008C0656 /* ContentView.swift */; };
 		2FCCA5CE2A357562008C0656 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FCCA5CD2A357562008C0656 /* Assets.xcassets */; };
@@ -39,6 +40,7 @@
 		2F80FDF72A35BD87005D055E /* ForecastBodyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastBodyView.swift; sourceTree = "<group>"; };
 		2F8EDCDE2A64C2C90017F883 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		2F8EDCE02A64C30A0017F883 /* FilterSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSettingsView.swift; sourceTree = "<group>"; };
+		2FC5AC402A65D569008A659C /* StationsXMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationsXMLParser.swift; sourceTree = "<group>"; };
 		2FCCA5C62A357561008C0656 /* SkyWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SkyWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FCCA5C92A357561008C0656 /* SkyWatch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyWatch.swift; sourceTree = "<group>"; };
 		2FCCA5CB2A357561008C0656 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 			children = (
 				2F80FDF02A35AA73005D055E /* MetarTafParser.bundle.js */,
 				2F80FDEC2A35A849005D055E /* MetarTaf.swift */,
+				2FC5AC402A65D569008A659C /* StationsXMLParser.swift */,
 			);
 			path = Parser;
 			sourceTree = "<group>";
@@ -239,6 +242,7 @@
 				2F8EDCE12A64C30A0017F883 /* FilterSettingsView.swift in Sources */,
 				2F80FDF32A35AC14005D055E /* METAR.swift in Sources */,
 				2FCCA5D92A358913008C0656 /* NavigationManagerView.swift in Sources */,
+				2FC5AC412A65D569008A659C /* StationsXMLParser.swift in Sources */,
 				2F80FDED2A35A849005D055E /* MetarTaf.swift in Sources */,
 				2F80FDEA2A35A259005D055E /* Station.swift in Sources */,
 				2F80FDF82A35BD87005D055E /* ForecastBodyView.swift in Sources */,
