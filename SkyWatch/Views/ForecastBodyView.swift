@@ -97,24 +97,27 @@ struct ForecastBodyView: View {
     }
     
     var body: some View {
-        HStack(spacing: 0) {
-            Text("Display mode")
-                .frame(maxWidth: .infinity, alignment: .leading)
-            
-            Picker("", selection: $viewModel.selectedSegment) {
-                Text("METAR").tag(0)
-                Text("TAF").tag(1)
-            }
-            .pickerStyle(SegmentedPickerStyle())
-            .frame(maxWidth: .infinity)
-        }
-        .padding()
-        .background(Color.secondary.opacity(0.25))
-        .cornerRadius(8)
-        
         VStack {
             if let metar = viewModel.metar {
                 ScrollView(.vertical) {
+                    HStack(spacing: 0) {
+                        Text("Display mode")
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        Picker("", selection: $viewModel.selectedSegment) {
+                            Text("METAR").tag(0)
+                            Text("TAF").tag(1)
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                        .frame(maxWidth: .infinity)
+                    }
+                    .padding()
+                    .background(Color.secondary.opacity(0.25))
+                    .cornerRadius(8)
+                    
+                    Spacer()
+                        .frame(height: 32)
+                    
                     VStack {
                         Group {
                             Text("Overview")
@@ -156,35 +159,39 @@ struct ForecastBodyView: View {
                         }
                         
                         Group {
-                            Text("Wind")
-                                .font(.title2)
-                                .bold()
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            
-                            Divider()
-                            
-                            Text(MetarTaf.shared.formatClouds(metar.rawString))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            
-                            Spacer()
-                                .frame(height: 32)
-                        }
-                        
-                        Group {
-                            Text("Map")
-                                .font(.title2)
-                                .bold()
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            
-                            Divider()
-                            
-                            MapEmbed(region: MKCoordinateRegion(
-                                center: CLLocationCoordinate2D(latitude: station.latitude, longitude: station.longitude),
-                                span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)
-                            ))
-                            
-                            Spacer()
-                                .frame(height: 32)
+                            HStack(alignment: .top) {
+                                VStack {
+                                    Text("Wind")
+                                        .font(.title2)
+                                        .bold()
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    
+                                    Divider()
+                                    
+                                    Text(MetarTaf.shared.formatClouds(metar.rawString))
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    
+                                    Spacer()
+                                        .frame(height: 32)
+                                }
+                                
+                                VStack {
+                                    Text("Map")
+                                        .font(.title2)
+                                        .bold()
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    
+                                    Divider()
+                                    
+                                    MapEmbed(region: MKCoordinateRegion(
+                                        center: CLLocationCoordinate2D(latitude: station.latitude, longitude: station.longitude),
+                                        span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)
+                                    ))
+                                    
+                                    Spacer()
+                                        .frame(height: 32)
+                                }
+                            }
                         }
                         
                         Group {
