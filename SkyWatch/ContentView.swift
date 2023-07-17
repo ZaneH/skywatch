@@ -11,14 +11,13 @@ import CoreData
 class ContentViewModel: ObservableObject {
     @Published var selectedFolder: String? = "All"
     @Published var selectedItem: String?
-
+    
     @Published var favorites: [String] = []
-    @Published var stations = AviationAPI.shared.stations
     
     private var viewContext: NSManagedObjectContext
     
-    @AppStorage("statesFilter") private var statesFilter: String = ""
-    @AppStorage("countriesFilter") private var countriesFilter: String = ""
+    @AppStorage("statesFilter") var statesFilter: String = ""
+    @AppStorage("countriesFilter") var countriesFilter: String = ""
     
     @Published var folders: [String: [String]] = [
         "All": [],
@@ -33,12 +32,14 @@ class ContentViewModel: ObservableObject {
     }
     
     func fetchStations() {
-        AviationAPI.shared.fetchStations(statesFilter: statesFilter, countriesFilter: countriesFilter, completion: { [weak self] result in
-            DispatchQueue.main.async {
-                self?.stations = result
-                self?.folders["All"] = self?.stations.map { $0.icaoId }
-            }
-        })
+        AviationAPI.shared.fetchStations(
+            statesFilter: statesFilter,
+            countriesFilter: countriesFilter,
+            completion: { [weak self] result in
+                DispatchQueue.main.async {
+                    self?.folders["All"] = AviationAPI.shared.stations.map { $0.icaoId }
+                }
+            })
     }
     
     func fetchFavorites() {
@@ -61,6 +62,7 @@ struct ContentView: View {
     @StateObject private var viewModel: ContentViewModel
     @State private var visibility: NavigationSplitViewVisibility = .all
     @State private var searchText: String = ""
+    @State private var showiPadFilterModal = false
     
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Favorite.icaoId, ascending: true)],
@@ -87,17 +89,17 @@ struct ContentView: View {
     }
     
     func searchStations(searchText: String) -> [Station] {
-        return viewModel.stations.filter { station in
-            station.icaoId.lowercased().contains(searchText.lowercased()) ||
-            station.country.lowercased().contains(searchText.lowercased()) ||
-            station.state.lowercased().contains(searchText.lowercased())
+        let lowercaseSearch = searchText.lowercased()
+        return AviationAPI.shared.stations.filter { station in
+            station.icaoId.lowercased().contains(lowercaseSearch) ||
+            station.country.lowercased().contains(lowercaseSearch) ||
+            station.state.lowercased().contains(lowercaseSearch)
         }
     }
     
     init() {
         let viewModel = ContentViewModel(viewContext: PersistenceController.shared.container.viewContext)
         _viewModel = StateObject(wrappedValue: viewModel)
-    
     }
     
     var body: some View {
@@ -111,19 +113,43 @@ struct ContentView: View {
             ListView(selectedItem: $viewModel.selectedItem, items: viewModel.folders[viewModel.selectedFolder ??  "All", default: []])
                 .navigationTitle(viewModel.selectedFolder ?? "All")
                 .navigationSplitViewColumnWidth(250)
+                #if !os(macOS)
+                .toolbar {
+                    ToolbarItem {
+                        Button {
+                            showiPadFilterModal = true
+                        } label: {
+                            Label("Filters", systemImage: "line.3.horizontal.decrease.circle")
+                        }.sheet(isPresented: $showiPadFilterModal, onDismiss: {
+                            viewModel.fetchStations()
+                        }) {
+                            FilterSettingsView()
+                                .frame(minWidth: 450, minHeight: 280)
+                        }
+                    }
+                }
+                #endif
         } detail: {
-            DetailView(selectedItem: viewModel.selectedItem, stations: viewModel.stations, toggleFavorite: toggleFavorite, isFavorite: isFavorite)
+            DetailView(selectedItem: viewModel.selectedItem, stations: AviationAPI.shared.stations, toggleFavorite: toggleFavorite, isFavorite: isFavorite)
         }
         .navigationSplitViewStyle(.balanced)
-        .searchable(text: $searchText, placement: .toolbar, prompt: "Station name, state, or country", suggestions: {
+        .searchable(text: $searchText, placement: .toolbar, prompt: "Loaded station name, state, or country", suggestions: {
             ForEach(searchStations(searchText: searchText).prefix(100), id: \.self) { station in
                 Button {
                     viewModel.selectedItem = station.icaoId
                 } label: {
                     Text(station.icaoId)
+                    Spacer()
+                    Text("\(station.state), \(station.country)")
+                        .foregroundColor(.gray)
                 }
             }
         })
+        #if os(macOS)
+        .onReceive(NotificationCenter.default.publisher(for: NSWindow.willCloseNotification)) { newValue in
+            viewModel.fetchStations()
+        }
+        #endif
     }
 }
 

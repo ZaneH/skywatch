@@ -15,6 +15,7 @@ class ForecastBodyViewModel: ObservableObject {
     @Published var station: Station?
     @Published var metar: METAR?
     @Published var selectedSegment = 0
+    @Published var isLoadingMetar: Bool = false
     
     var flightCategoryCode: String? {
         guard let metar = metar else {
@@ -68,11 +69,13 @@ class ForecastBodyViewModel: ObservableObject {
         
         metar = nil
         
+        self.isLoadingMetar = true
         AviationAPI.shared.fetchMetarString(icaoId: icaoId) { metarString in
             Task {
                 let metar = await MetarTaf.shared.parseMetar(metarString!)
                 DispatchQueue.main.async {
                     self.metar = metar
+                    self.isLoadingMetar = false
                 }
             }
         }
@@ -133,7 +136,15 @@ struct ForecastBodyView: View {
                                 ImageWidget(imageName: "sunrise.fill", heading: "Sunrise", subheading: getSunriseSunset().0, color: .yellow)
                                 ImageWidget(imageName: "sunset", heading: "Sunset", subheading: getSunriseSunset().1, color: .yellow)
                                 ImageWidget(imageName: "mountain.2.fill", heading: "Elevation", subheading: "\(station.elevation) feet", color: .gray)
-                                ImageWidget(imageName: "location.north.fill", heading: "Wind", subheading: "\(metar.wind.degrees ?? 0)° @ \(metar.wind.speed) knots", color: .gray, rotation: metar.wind.degrees ?? 0 + 180)
+                                if (metar.wind != nil) {
+                                    ImageWidget(
+                                        imageName: "location.north.fill",
+                                        heading: "Wind",
+                                        subheading: "\(metar.wind?.degrees ?? 0)° @ \(metar.wind?.speed ?? 0) knots",
+                                        color: .gray,
+                                        rotation: metar.wind?.degrees ?? 0 + 180
+                                    )
+                                }
                                 ImageWidget(imageName: "airplane.circle.fill", heading: "Flight Category", subheading: viewModel.formattedFlightCategory, color: viewModel.flightCategoryColor)
                                 ImageWidget(imageName: "eye.fill", heading: "Visibility", subheading: viewModel.formattedVisibility, color: .gray)
                                 ImageWidget(imageName: "arrow.up.and.down", heading: "Altimeter", subheading: viewModel.formattedAltimeter, color: .gray)
@@ -152,8 +163,20 @@ struct ForecastBodyView: View {
                             Divider()
                             
                             WrappingHStack(lineSpacing: 12) {
-                                ImageWidget(imageName: "thermometer.sun.fill", heading: "Temperature", subheading: "\(metar.temperature)°C", color: .red)
-                                ImageWidget(imageName: "thermometer.snowflake", heading: "Dewpoint", subheading: "\(metar.dewPoint)°C", color: .blue)
+                                if (metar.temperature != nil) {
+                                    ImageWidget(imageName: "thermometer.sun.fill", heading: "Temperature", subheading: "\(metar.temperature ?? 0)°C", color: .red)
+                                }
+                                
+                                if (metar.dewPoint != nil) {
+                                    ImageWidget(imageName: "thermometer.snowflake", heading: "Dewpoint", subheading: "\(metar.dewPoint ?? 0)°C", color: .blue)
+                                }
+                                
+                                if (metar.temperature == nil && metar.dewPoint == nil) {
+                                    Text("No temperature data found. Inspect the raw METAR to double-check.")
+                                        .foregroundColor(.gray)
+                                        .padding()
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                }
                             }.frame(maxWidth: .infinity, alignment: .leading)
                             
                             Spacer()
@@ -162,19 +185,21 @@ struct ForecastBodyView: View {
                         
                         Group {
                             HStack(alignment: .top) {
-                                VStack {
-                                    Text("Wind")
-                                        .font(.title2)
-                                        .bold()
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                    
-                                    Divider()
-                                    
-                                    Text(MetarTaf.shared.formatClouds(metar.rawString))
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                    
-                                    Spacer()
-                                        .frame(height: 32)
+                                if (metar.clouds.count > 0) {
+                                    VStack {
+                                        Text("Wind")
+                                            .font(.title2)
+                                            .bold()
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        
+                                        Divider()
+                                        
+                                        Text(MetarTaf.shared.formatClouds(metar.rawString))
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        
+                                        Spacer()
+                                            .frame(height: 32)
+                                    }
                                 }
                                 
                                 VStack {
@@ -210,9 +235,16 @@ struct ForecastBodyView: View {
                     }.padding()
                 }
             } else {
-                ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle())
-                    .frame(width: 44, height: 44)
+                if (viewModel.isLoadingMetar) {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle())
+                        .frame(width: 44, height: 44)
+                } else {
+                    Text("There was an issue loading data from this station. This is to be expected for some stations.")
+                        .foregroundColor(.gray)
+                        .padding(.horizontal)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
             }
         }
         .onAppear {

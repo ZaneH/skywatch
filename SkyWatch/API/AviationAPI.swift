@@ -12,9 +12,13 @@ class AviationAPI: ObservableObject {
     
     @Published var stations: [Station] = []
     
+    private func splitCSV(string: String) -> [String] {
+        return string.replacingOccurrences(of: " ", with: "").components(separatedBy: ",").filter({ $0 != "" })
+    }
+    
     func fetchStations(statesFilter: String, countriesFilter: String, completion: @escaping([Station]) -> ()) {
-        let statesFilterTokens = statesFilter.replacingOccurrences(of: " ", with: "").components(separatedBy: ",").filter({ $0 != "" })
-        let countriesFilterTokens = countriesFilter.replacingOccurrences(of: " ", with: "").components(separatedBy: ",").filter({ $0 != "" })
+        let statesFilterTokens = splitCSV(string: statesFilter)
+        let countriesFilterTokens = splitCSV(string: countriesFilter)
         
         var qsValue = "\(statesFilterTokens.map({ "@\($0)," }).joined())\(countriesFilterTokens.map({ "~\($0)," }).joined())"
         if (qsValue.count == 0) {
@@ -34,7 +38,9 @@ class AviationAPI: ObservableObject {
             
             DispatchQueue.main.async {
                 completion(parser.stations)
-                self.stations = parser.stations
+                self.stations = parser.stations.sorted(by: { a, b in
+                    a.icaoId < b.icaoId
+                })
             }
         }.resume()
     }

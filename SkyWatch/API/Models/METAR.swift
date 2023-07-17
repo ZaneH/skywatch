@@ -16,11 +16,11 @@ struct METAR: Codable, Identifiable {
     let minute: Int
     let message: String
     let remarks: [Remark]
-    let clouds: [Cloud]
-    let wind: Wind
+    let clouds: [Cloud?]
+    let wind: Wind?
     let visibility: Visibility
-    let temperature: Int
-    let dewPoint: Int
+    let temperature: Int?
+    let dewPoint: Int?
     let altimeter: Altimeter
     var rawString: String = ""
     
@@ -71,33 +71,30 @@ struct METAR: Codable, Identifiable {
     var description: String {
         var result = ""
         
-        // Append station, day, hour, minute, and message
+        result += "Raw METAR: \(message)\n"
         result += "Station: \(station)\n"
         result += "Day: \(day), Hour: \(hour), Minute: \(minute)\n"
-        result += "Raw METAR: \(message)\n"
         
         // Append remarks
         result += "Remarks:\n"
         for remark in remarks {
             result += "  Type: \(remark.type), Description: \(remark.description ?? "N/A"), Raw: \(remark.raw)\n"
-            // Append other properties of the remark as needed
         }
         
         // Append clouds
         result += "Clouds:\n"
         for cloud in clouds {
-            result += "  Quantity: \(cloud.quantity), Height: \(cloud.height)\n"
+            result += "  Quantity: \(cloud?.quantity ?? "N/A"), Height: \(cloud?.height ?? 0)\n"
         }
         
         // Append wind
-        result += "Wind: Speed: \(wind.speed), Direction: \(wind.direction), Degrees: \(wind.degrees ?? 0), Unit: \(wind.unit)\n"
-        // Append other properties of the wind as needed
+        result += "Wind: Speed: \(wind?.speed ?? 0), Direction: \(wind?.direction ?? "N/A"), Degrees: \(wind?.degrees ?? 0), Unit: \(wind?.unit ?? "N/A")\n"
         
         // Append visibility
         result += "Visibility: Value: \(visibility.value), Unit: \(visibility.unit)\n"
         
         // Append temperature, dew point, and altimeter
-        result += "Temperature: \(temperature), Dew Point: \(dewPoint)\n"
+        result += "Temperature: \(temperature ?? 0), Dew Point: \(dewPoint ?? 0)\n"
         result += "Altimeter: Value: \(altimeter.value), Unit: \(altimeter.unit)\n"
         
         return result
