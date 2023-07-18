@@ -35,7 +35,9 @@ struct ForecastView: View {
                         .font(.title)
                         .frame(alignment: .trailing)
                 }
-            }.padding()
+            }
+            .padding()
+            .frame(minWidth: 380)
             
             ForecastBodyView(station: self.station)
             
