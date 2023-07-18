@@ -248,12 +248,16 @@ struct ForecastBodyView: View {
             }
         }
         .onAppear {
-            viewModel.station = station
-            viewModel.loadData()
+            DispatchQueue.main.async {
+                viewModel.station = station
+                viewModel.loadData()
+            }
         }
         .onChange(of: station) { newValue in
-            viewModel.station = newValue
-            viewModel.loadData()
+            DispatchQueue.main.async {
+                viewModel.station = newValue
+                viewModel.loadData()
+            }
         }
     }
 }

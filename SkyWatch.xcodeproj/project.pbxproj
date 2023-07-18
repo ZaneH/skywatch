@@ -23,7 +23,6 @@
 		2FCCA5CC2A357561008C0656 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCCA5CB2A357561008C0656 /* ContentView.swift */; };
 		2FCCA5CE2A357562008C0656 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FCCA5CD2A357562008C0656 /* Assets.xcassets */; };
 		2FCCA5D12A357562008C0656 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FCCA5D02A357562008C0656 /* Preview Assets.xcassets */; };
-		2FCCA5D92A358913008C0656 /* NavigationManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCCA5D82A358913008C0656 /* NavigationManagerView.swift */; };
 		2FF7172C2A36B7C4009B8078 /* Favorites.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7172A2A36B7C4009B8078 /* Favorites.xcdatamodeld */; };
 		2FF7172E2A36B8EC009B8078 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7172D2A36B8EC009B8078 /* Persistence.swift */; };
 		2FF717302A36CD45009B8078 /* MapEmbed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF7172F2A36CD45009B8078 /* MapEmbed.swift */; };
@@ -47,7 +46,6 @@
 		2FCCA5CD2A357562008C0656 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2FCCA5D02A357562008C0656 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2FCCA5D22A357562008C0656 /* SkyWatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SkyWatch.entitlements; sourceTree = "<group>"; };
-		2FCCA5D82A358913008C0656 /* NavigationManagerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationManagerView.swift; sourceTree = "<group>"; };
 		2FF7172B2A36B7C4009B8078 /* Favorites.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Favorites.xcdatamodel; sourceTree = "<group>"; };
 		2FF7172D2A36B8EC009B8078 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		2FF7172F2A36CD45009B8078 /* MapEmbed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapEmbed.swift; sourceTree = "<group>"; };
@@ -143,7 +141,6 @@
 				2FCCA5CD2A357562008C0656 /* Assets.xcassets */,
 				2FCCA5D22A357562008C0656 /* SkyWatch.entitlements */,
 				2FCCA5CF2A357562008C0656 /* Preview Content */,
-				2FCCA5D82A358913008C0656 /* NavigationManagerView.swift */,
 				2FF7172A2A36B7C4009B8078 /* Favorites.xcdatamodeld */,
 				2FF7172D2A36B8EC009B8078 /* Persistence.swift */,
 			);
@@ -241,7 +238,6 @@
 				2FF7172E2A36B8EC009B8078 /* Persistence.swift in Sources */,
 				2F8EDCE12A64C30A0017F883 /* FilterSettingsView.swift in Sources */,
 				2F80FDF32A35AC14005D055E /* METAR.swift in Sources */,
-				2FCCA5D92A358913008C0656 /* NavigationManagerView.swift in Sources */,
 				2FC5AC412A65D569008A659C /* StationsXMLParser.swift in Sources */,
 				2F80FDED2A35A849005D055E /* MetarTaf.swift in Sources */,
 				2F80FDEA2A35A259005D055E /* Station.swift in Sources */,
