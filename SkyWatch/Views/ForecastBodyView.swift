@@ -135,7 +135,7 @@ struct ForecastBodyView: View {
                             WrappingHStack(lineSpacing: 12) {
                                 ImageWidget(imageName: "sunrise.fill", heading: "Sunrise", subheading: getSunriseSunset().0, color: .yellow)
                                 ImageWidget(imageName: "sunset", heading: "Sunset", subheading: getSunriseSunset().1, color: .yellow)
-                                ImageWidget(imageName: "mountain.2.fill", heading: "Elevation", subheading: "\(station.elevation) feet", color: .gray)
+                                ImageWidget(imageName: "mountain.2.fill", heading: "Elevation", subheading: "\(station.elevation) meters", color: .gray)
                                 if (metar.wind != nil) {
                                     ImageWidget(
                                         imageName: "location.north.fill",
@@ -196,6 +196,7 @@ struct ForecastBodyView: View {
                                         
                                         Text(MetarTaf.shared.formatClouds(metar.rawString))
                                             .frame(maxWidth: .infinity, alignment: .leading)
+                                            .textSelection(.enabled)
                                         
                                         Spacer()
                                             .frame(height: 32)
@@ -222,7 +223,7 @@ struct ForecastBodyView: View {
                         }
                         
                         Group {
-                            Text("Raw Description")
+                            Text("Full Description")
                                 .font(.title2)
                                 .bold()
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -231,6 +232,7 @@ struct ForecastBodyView: View {
                             
                             Text(metar.description)
                                 .frame(maxWidth: .infinity, alignment: .leading)
+                                .textSelection(.enabled)
                         }
                     }.padding()
                 }

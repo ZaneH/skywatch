@@ -143,7 +143,7 @@ struct ContentView: View {
                 #endif
                 }
         } detail: {
-            DetailView(selectedItem: viewModel.selectedItem, stations: AviationAPI.shared.stations, toggleFavorite: toggleFavorite, isFavorite: isFavorite)
+            DetailView(selectedItem: viewModel.selectedItem, toggleFavorite: toggleFavorite, isFavorite: isFavorite)
         }
         .navigationSplitViewStyle(.balanced)
         .searchable(text: $searchText, placement: .toolbar, prompt: "Loaded station name, state, or country", suggestions: {
@@ -211,7 +211,6 @@ struct ListView: View {
 
 struct DetailView: View {
     let selectedItem: String?
-    let stations: [Station]
     let toggleFavorite: (String) -> Void
     let isFavorite: (String) -> Bool
     
@@ -219,7 +218,7 @@ struct DetailView: View {
         NavigationStack {
             ZStack {
                 if let selectedItem = selectedItem {
-                    if let selectedStation = stations.first(where: { $0.icaoId == selectedItem }) {
+                    if let selectedStation = AviationAPI.shared.stations.first(where: { $0.icaoId == selectedItem }) {
                         ForecastView(station: selectedStation)
                             .toolbar {
                                 ToolbarItem(placement: .navigation) {

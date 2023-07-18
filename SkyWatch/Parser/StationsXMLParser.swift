@@ -63,7 +63,7 @@ class StationsXMLParser: NSObject, XMLParserDelegate {
                 self.currentStation?.longitude = Double(string) ?? 0.0
                 break
             case "elevation_m":
-                self.currentStation?.elevation = Int(string) ?? 0
+                self.currentStation?.elevation = (string as NSString).integerValue
                 break
             case "state":
                 self.currentStation?.state = string

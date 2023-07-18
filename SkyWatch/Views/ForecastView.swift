@@ -34,6 +34,7 @@ struct ForecastView: View {
                     Text("\(self.station.latitude.formatted(.number)), \(self.station.longitude.formatted(.number))")
                         .font(.title)
                         .frame(alignment: .trailing)
+                        .textSelection(.enabled)
                 }
             }
             .padding()

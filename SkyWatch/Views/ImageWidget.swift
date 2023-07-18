@@ -45,6 +45,7 @@ struct ImageWidget: View {
                 Text(subheading)
                     .font(.subheadline)
                     .bold()
+                    .textSelection(.enabled)
             }
         }
         .frame(height: 52) // Set a fixed width for the widget
