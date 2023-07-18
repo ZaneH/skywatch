@@ -39,7 +39,7 @@ struct ForecastView: View {
             
             ForecastBodyView(station: self.station)
             
-            Spacer()
+            Spacer(minLength: 0)
         }
     }
 }
