@@ -1,17 +1,18 @@
 # ⛅️ SkyWatch
 
-A METAR decoder in SwiftUI.
+A METAR decoder. Written in SwiftUI.
 
 **In development.**
-METAR data is from [beta.aviationweather.gov](https://beta.aviationweather.gov/).
+
+- METAR data is from [beta.aviationweather.gov](https://beta.aviationweather.gov/).
+- Station data is from [aviationweather.gov/dataserver](https://www.aviationweather.gov/dataserver/example?datatype=station).
 
 Tested on iPad and macOS.
 
 ## Preview
 
 <p align="center">
-    <img width="70%" alt="macOS screenshot" src="https://i.imgur.com/NCwB1lS.png">
-    <img width="25%" alt="alt macOS screenshot" src="https://i.imgur.com/UzndGno.png">
+    <img width="76%" alt="macOS screenshot" src="https://i.imgur.com/ZDMcsWo.png">
 </p>
 
 ## License
