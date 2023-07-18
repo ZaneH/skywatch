@@ -142,6 +142,7 @@ struct ContentView: View {
                     Spacer()
                     Text("\(station.state), \(station.country)")
                         .foregroundColor(.gray)
+                        .font(.subheadline)
                 }
             }
         })
@@ -174,9 +175,21 @@ struct ListView: View {
     
     var body: some View {
         List(selection: $selectedItem) {
-            ForEach(items, id: \.self) { item in
-                NavigationLink(value: item) {
-                    Text(item)
+            ForEach(items, id: \.self) { icaoId in
+                if let foundStation = AviationAPI.shared.stations.first(where: { station in
+                    station.icaoId == icaoId
+                }) {
+                    NavigationLink(value: icaoId) {
+                        Text(icaoId)
+                        Spacer()
+                        Text("\(foundStation.state), \(foundStation.country)")
+                            .foregroundColor(.gray)
+                            .font(.subheadline)
+                    }
+                } else {
+                    NavigationLink(value: icaoId) {
+                        Text(icaoId)
+                    }
                 }
             }
         }

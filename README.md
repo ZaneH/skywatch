@@ -10,7 +10,8 @@ Tested on iPad and macOS.
 ## Preview
 
 <p align="center">
-    <img width="80%" alt="macOS screenshot" src="https://i.imgur.com/0mF7UnU.png">
+    <img width="70%" alt="macOS screenshot" src="https://i.imgur.com/NCwB1lS.png">
+    <img width="25%" alt="alt macOS screenshot" src="https://i.imgur.com/UzndGno.png">
 </p>
 
 ## License

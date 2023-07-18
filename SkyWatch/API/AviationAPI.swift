@@ -22,7 +22,7 @@ class AviationAPI: ObservableObject {
         
         var qsValue = "\(statesFilterTokens.map({ "@\($0)," }).joined())\(countriesFilterTokens.map({ "~\($0)," }).joined())"
         if (qsValue.count == 0) {
-            qsValue = "~us"
+            qsValue = "@ny"
         }
         
         guard let url = URL(string: "https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=stations&requestType=retrieve&format=xml&stationString=\(qsValue)") else {
