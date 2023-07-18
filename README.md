@@ -11,7 +11,7 @@ Tested on iPad and macOS.
 
 ## Todo
 
-- [ ] Link to AWC map (example: [KJFK](https://beta.aviationweather.gov/gfa/?tab=obs&basemap=esriDark&mapLayers=basicMap,boundary&center=40.63,%20-73.77&zoom=12&boundarytype=gairmet))
+- [x] Link to AWC map (example: [KJFK](https://beta.aviationweather.gov/gfa/?tab=obs&basemap=esriDark&mapLayers=basicMap,boundary&center=40.63,%20-73.77&zoom=12&boundarytype=gairmet))
 - [ ] Add preference for °C/°F units
 - [ ] Add TAF info
 - [ ] Add NOTAM info
@@ -21,7 +21,7 @@ Tested on iPad and macOS.
 ## Preview
 
 <p align="center">
-    <img width="76%" alt="macOS screenshot" src="https://i.imgur.com/ZDMcsWo.png">
+    <img width="76%" alt="macOS screenshot" src="https://i.imgur.com/aa3j05n.png">
 </p>
 
 ## License

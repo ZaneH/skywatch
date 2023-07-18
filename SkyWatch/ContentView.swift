@@ -210,6 +210,8 @@ struct ListView: View {
 }
 
 struct DetailView: View {
+    @Environment(\.openURL) var openURL
+    
     let selectedItem: String?
     let toggleFavorite: (String) -> Void
     let isFavorite: (String) -> Bool
@@ -235,6 +237,13 @@ struct DetailView: View {
                                         } else {
                                             Label("Favorite", systemImage: "star")
                                         }
+                                    })
+                                }
+                                ToolbarItem(placement: .primaryAction) {
+                                    Button(action: {
+                                        openURL(URL(string: "https://beta.aviationweather.gov/gfa/?tab=obs&basemap=esriDark&mapLayers=basicMap,boundary&center=\(selectedStation.latitude),\(selectedStation.longitude)&zoom=12&boundarytype=gairmet")!)
+                                    }, label: {
+                                        Label("Open Observations", systemImage: "globe")
                                     })
                                 }
                             }
