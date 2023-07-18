@@ -27,14 +27,15 @@ class ContentViewModel: ObservableObject {
     init(viewContext: NSManagedObjectContext) {
         self.viewContext = viewContext
         
-        fetchStations()
         fetchFavorites()
+        fetchStations()
     }
     
     func fetchStations() {
         AviationAPI.shared.fetchStations(
             statesFilter: statesFilter,
             countriesFilter: countriesFilter,
+            additionalStations: self.favorites.joined(separator: ","),
             completion: { [weak self] result in
                 DispatchQueue.main.async {
                     self?.folders["All"] = AviationAPI.shared.stations.map { $0.icaoId }
@@ -115,7 +116,7 @@ struct ContentView: View {
                 .navigationSplitViewColumnWidth(250)
                 .toolbar {
                 #if os(macOS)
-                    ToolbarItem(placement: .navigation) {
+                    ToolbarItem(placement: .automatic) {
                         Button {
                             if #available(macOS 13, *) {
                                 NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
@@ -229,13 +230,13 @@ struct DetailView: View {
                                         withAnimation {
                                             toggleFavorite(selectedItem)
                                         }
-                                    }) {
+                                    }, label: {
                                         if isFavorite(selectedItem) {
-                                            Image(systemName: "star.fill")
+                                            Label("Unfavorite", systemImage: "star.fill")
                                         } else {
-                                            Image(systemName: "star")
+                                            Label("Favorite", systemImage: "star")
                                         }
-                                    }
+                                    })
                                 }
                             }
                     }

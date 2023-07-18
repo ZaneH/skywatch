@@ -16,13 +16,17 @@ class AviationAPI: ObservableObject {
         return string.replacingOccurrences(of: " ", with: "").components(separatedBy: ",").filter({ $0 != "" })
     }
     
-    func fetchStations(statesFilter: String, countriesFilter: String, completion: @escaping([Station]) -> ()) {
+    func fetchStations(statesFilter: String, countriesFilter: String, additionalStations: String?, completion: @escaping([Station]) -> ()) {
         let statesFilterTokens = splitCSV(string: statesFilter)
         let countriesFilterTokens = splitCSV(string: countriesFilter)
         
         var qsValue = "\(statesFilterTokens.map({ "@\($0)," }).joined())\(countriesFilterTokens.map({ "~\($0)," }).joined())"
         if (qsValue.count == 0) {
             qsValue = "@ny"
+        }
+        
+        if (additionalStations != nil) {
+            qsValue.append(",\(additionalStations!)")
         }
         
         guard let url = URL(string: "https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=stations&requestType=retrieve&format=xml&stationString=\(qsValue)") else {
