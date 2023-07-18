@@ -113,8 +113,20 @@ struct ContentView: View {
             ListView(selectedItem: $viewModel.selectedItem, items: viewModel.folders[viewModel.selectedFolder ??  "All", default: []])
                 .navigationTitle(viewModel.selectedFolder ?? "All")
                 .navigationSplitViewColumnWidth(250)
-                #if !os(macOS)
                 .toolbar {
+                #if os(macOS)
+                    ToolbarItem(placement: .navigation) {
+                        Button {
+                            if #available(macOS 13, *) {
+                                NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+                            } else {
+                                NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
+                            }
+                        } label: {
+                            Label("Filters", systemImage: "line.3.horizontal.decrease.circle")
+                        }
+                    }
+                #else
                     ToolbarItem {
                         Button {
                             showiPadFilterModal = true
@@ -127,8 +139,8 @@ struct ContentView: View {
                                 .frame(minWidth: 450, minHeight: 280)
                         }
                     }
-                }
                 #endif
+                }
         } detail: {
             DetailView(selectedItem: viewModel.selectedItem, stations: AviationAPI.shared.stations, toggleFavorite: toggleFavorite, isFavorite: isFavorite)
         }
